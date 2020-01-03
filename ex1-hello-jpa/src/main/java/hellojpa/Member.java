@@ -1,28 +1,31 @@
 package hellojpa;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.math.BigInteger;
+import java.rmi.MarshalException;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 @Entity
 public class Member {
 
-    @Id
+    @Id @GeneratedValue
+    @Column(name = "MEMBER_ID")
     private Long id;
-    private String name;
 
-    public Long getId() {
-        return id;
-    }
+    @Column(name="USERNAME")
+    private String username;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    @OneToOne
+    @JoinColumn(name = "LOCKER_ID")
+    private Locker locker;
 
-    public String getName() {
-        return name;
-    }
+    @ManyToMany
+    @JoinTable(name = "MEMBER_PRODUCT")
+    private List<Product> products = new ArrayList<Product>();
 
-    public void setName(String name) {
-        this.name = name;
+    public Member(){
+
     }
 }
